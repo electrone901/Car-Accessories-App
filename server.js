@@ -21,9 +21,6 @@ app.use(bodyparser.json())
 app.use(express.static('./public')) // absolute path /
 
 
-// ========================================
-
-
 
 // CREATE A POST
 app.post('/api/post',(req,res)=>{
@@ -152,8 +149,7 @@ app.get('/api/post/:tags',(req,res)=>{
 
 
 
-///======  USER =======
-// LOGIN
+// LOGIN USER
 app.post('/api/login', (req,res)=>{
 	let body = req.body;
 	db.User.findOne(
@@ -183,6 +179,7 @@ app.post('/api/login', (req,res)=>{
 })
 
 app.post('/api/logout', (req,res)=>req.session.destroy(() => res.end()))
+
 
 // CREATE USER
 app.post('/api/user',(req,res)=>{
@@ -235,9 +232,11 @@ app.get('/api/user/:id',(req,res)=>{
 const port = process.env.PORT || '5000'
 
 
+
 db.sequelize.sync().then(function() {
+	//CALL FILE, CREATE DB
+	require('./car-seed.js')
 	app.listen(port, ()=>console.log('YAY...!! Listening to port 5000 ' + port))
-  // app.listen(8000, ()=>console.log('YAY...!! Listening to port 8000'))
 })
 
 app.get('/*', function(req, res) {

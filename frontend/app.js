@@ -4,7 +4,7 @@ import {Router, Route, IndexRoute, Link, browserHistory} from 'react-router';
 
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
-import reducers from './reducers'; //look for index.js, ndex has export this is good for many reducer
+import reducers from './reducers'; //look for index.js, index has export this is good for many reducer
 
 
 import Navbar from './nav'
