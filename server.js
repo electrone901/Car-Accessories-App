@@ -232,9 +232,13 @@ app.get('/api/user/:id',(req,res)=>{
 
 
 // app.use(apiRouter)
-db.sequelize.sync().then(function() {
-  app.listen(8000, ()=>console.log('YAY...!! Listening to port 8000'))
-})
+const port = process.env.PORT || '8000'
+app.listen(port, ()=>console.log('YAY...!! Listening to port 8000 ' + port))
+
+// db.sequelize.sync().then(function() {
+
+//   app.listen(8000, ()=>console.log('YAY...!! Listening to port 8000'))
+// })
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, '/views/index.html'))
