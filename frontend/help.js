@@ -6,7 +6,7 @@ const Help = React.createClass({
 	
 	render(){
 		return(
-               <div>
+               <div className='container' style={{minHeight: '450px'}}>
                <h2>Need help?</h2>
                <h2>JustCars.com Help </h2> <br/>
                     

@@ -32,7 +32,6 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3"
   },
-
   "engines": {
     "node": "6.4.0",
     "npm": "3.10.3"

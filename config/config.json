@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "Luis",
-    "password": null,
-    "database": "c1",
+    "username": "ctp_user",
+    "password": "ctp_user",
+    "database": "car",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

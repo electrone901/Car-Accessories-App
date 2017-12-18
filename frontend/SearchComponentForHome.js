@@ -3,7 +3,7 @@ import React from 'react';
 import $ from 'jquery';
 import {Link} from 'react-router'
 
-const SearchByTitle = React.createClass({
+const SearchComponentForHome = React.createClass({
   getInitialState(){
     return {
       post:[],
@@ -12,8 +12,8 @@ const SearchByTitle = React.createClass({
   },
 
   submitNewPost: function (e) {
-    e.preventDefault();
-    this.refs.form.reset()
+    e.preventDefault()
+    this.refs.form.reset();
     var inputToSearch = this.state.inputToSearch;
     $.ajax({
   		url: "/api/post/search/" + inputToSearch,
@@ -38,21 +38,24 @@ const SearchByTitle = React.createClass({
 
     } 
     return(
-      <div className='container' style={{minHeight: '450px'}}>
-        <center>
-          <form onSubmit={this.submitNewPost} ref="form">
-            <input className='input-search-searchComponent' type="text" placeholder="Quick Search" onChange={this.handleChange} required="required"  autoFocus></input><br/>
+      <div style={{width:'100%', maxHeight:'300px',minHeight:'120px', overflowY:' scroll'}}>
 
-            <button type="submit" className="btn btn-success">Search</button>
-          </form>
-        </center>
+        <form onSubmit={this.submitNewPost} ref="form">
+          <input className='input-search' type="text" placeholder="Quick Search" onChange={this.handleChange} required="required"  autoFocus></input>
+
+          <button type="submit" className="btn btn-success">Search</button>
+        </form>
+
         {searchResult}
-        <div className='middle'>
+
+        <div className='middleForHome'>
           {this.state.post.map((ele,i)=>{
-            return <div key={i} className='gallery'>
-            	<Link to={'/posts/' +ele.id}><img src={ele.image} className='itemGallery'/></Link>
-            	<Link to={'/posts/' + ele.id}><h4 className='img-title'>{ele.title}</h4> </Link>
-            </div>
+            return (
+              <div key={i} className='gallery'>
+                <Link to={'/posts/' +ele.id}><img src={ele.image} className='itemGallery'/></Link>
+                <Link to={'/posts/' +ele.id}><h4 className='img-title'>{ele.title}</h4> </Link>
+              </div>
+            )
           })}
         </div>
 
@@ -60,14 +63,8 @@ const SearchByTitle = React.createClass({
       </div>
     )
   }
-
+  
 })
 
-export default SearchByTitle;
-
-
-
-
-
-
+export default SearchComponentForHome;
 

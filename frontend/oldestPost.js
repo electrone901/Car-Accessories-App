@@ -17,8 +17,8 @@ componentDidMount: function (){
 render(){
 	console.log('ARE YOU GETTING DATA?',this.state.post)
 	return(
-		<div className="container-main">
-			<div className='container1'>
+		<div className="container">
+			<div className="thumbnail clearfix" style={{border: '0px'}}>
 		      <h1>Order by Oldest to Newest</h1>
 		      {this.state.post.map((ele,i)=>{
 		        return <div key={i}>
@@ -26,7 +26,11 @@ render(){
 		                
 		                <p>{ele.body}</p> 
 		                <p>{ele.location}</p> 
-		                <img src={ele.image}/>
+
+		                 <div className="thumbnail clearfix" style={{border: '0px'}}>
+											<Link to={'/posts/' +ele.id}><img className="img-responsive" src={ele.image}/></Link>
+										</div>
+
 		               </div>
 		      })}
 		    </div>

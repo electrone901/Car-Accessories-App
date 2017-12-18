@@ -57,13 +57,13 @@ app.get('/api/post/:id',(req,res)=>{
 })
 
 
-// any is a key I defined,use to access the req. 
+// any is a key I defined,use to access the req. ilike: non-cases sensitive
 app.get('/api/post/search/:any',(req,res)=>{
 	console.log('req.params========',req.params)
 	db.Post.findAll({
 	  where: {
 	    title: {
-	      $like: '%' + req.params.any + '%'
+	      $ilike: '%' + req.params.any + '%'
 		}
 	  }
 	})
@@ -118,7 +118,11 @@ app.get('/api/manage',(req,res)=>{
 	console.log('===req.session ======',req.session)
 	if(req.session.user){
 		console.log('===req.session userId ======',req.session.user.id)
-		db.Post.findAll({ where: { UserId: req.session.user.id } }) 
+		db.Post.findAll({ 
+			where: { 
+				UserId: req.session.user.id
+			} 
+		}) 
 		.then((data)=>res.send(data))
 	} else {
 		res.send([])
@@ -240,6 +244,6 @@ db.sequelize.sync().then(function() {
 })
 
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, '/views/index.html'))
+  res.sendFile(path.join(__dirname, '/public/index.html'))
 })
 

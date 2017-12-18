@@ -5,44 +5,53 @@ import SideBar from './SideBar.js'
 import RightSideBar from './rightSideBar.js'
 
 const Home = React.createClass({
-getInitialState() {
-	return ({post: []})
-},
-componentDidMount: function (){
-	$.ajax({
-		url: "/api/post/sort/by-five",
-		method:'GET'
-	})
-	.done((data)=>this.setState({post:data}))
-},
+	getInitialState() {
+		return ({post: []})
+	},
 
-render(){
-	console.log('ARE YOU GETTING DATA?',this.state.post)
-	return(
-		<div className="container-main">
-			<SideBar />   
+	componentDidMount: function (){
+		$.ajax({
+			url: "/api/post/sort/by-five",
+			method:'GET'
+		})
+		.done((data)=>this.setState({post:data}))
+	},
 
-			<div className='middle'>
-		      <h3 className='middle-feature'>FEATURE  CAR  ADS</h3>
-		      {this.state.post.map((ele,i)=>{
-		        return <div key={i} className='gallery'>
-		        	<img src={ele.image} className='itemGallery'/>
-		        	<Link to={'/posts/' +ele.id}><h4 className='img-title'>{ele.title}</h4> </Link>
-		        </div>
-		      })}
-		    </div>
+	render(){
+		return(
+			
+			<div className="container" style={{ width: '100%', marginTop:'43px', minHeight: '450px'}}>
+				<div className="row">
+
+					<div className="col-md-3">
+						<SideBar /> 
+					</div>  
 
 
-		    <div className='navRightSide'>
-		    	<RightSideBar/>
-		      
-		     
-		    </div>
+					<div className='col-md-6'>
+						<div className="row">
+				      {this.state.post.map((ele,i)=>{
+				        return (
+				        	<div className='col-md-4 thumbnail' key={i} style={{paddingBottom: "20px"}}>
+					        	<Link to={'/posts/' +ele.id}><img className="img-responsive" style={{height: '140px'}} src={ele.image}/></Link>
 
+					        	<div className="link"><a href="details.html"><Link to={'/posts/' +ele.id} className="btn-default btn4"><span>READ MORE</span></Link></a>
+					        	</div>
 
-      </div>
-		)
-}
+					        </div>
+				        )
+				      })}
+				    </div>
+			    </div>
+
+			    <div className='col-md-3'>
+			    	<RightSideBar/>
+			    </div>
+
+			  </div> 
+	    </div>
+			)
+	}
 })
 
 export default Home

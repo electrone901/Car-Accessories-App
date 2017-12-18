@@ -25,7 +25,7 @@ const ManageAdSinglePost = React.createClass({
 	 })
 	},
 
-	// fetch the post info with the postId passed as props. Then sets state for every property and then it is render.
+	// fetch the post info with the postId passed as props
 	componentDidMount: function () {
 		$.ajax({
 			url:'/api/post/' + this.props.params.postId,
@@ -34,68 +34,46 @@ const ManageAdSinglePost = React.createClass({
 		.done((data)=>{
 			console.log('data', data)
 			this.setState({
-				post:data,
-				title: data.title,
-				body: data.body,
-				tags: data.tags,	
-			  price: data.price,  
-			  phone: data.phone, 
-			  year: data.year,
-			  brand: data.brand,
-			  location: data.location,    
-			  payments_accepted: data.payments_accepted, 
+				post:data
 			})
 		})
 	},
 
+	//not sure how to use this 
+	componentWillUpdate(){
+		title: this.state.title
+	}, 
 
 	// submit updates to database once the user clicks save
 	submitUpdate(e){
 		e.preventDefault();
+		console.log('this.props in singleAd: ', this.props)
+		$.ajax({
+		  url:'/api/post/' + this.props.params.postId,
+		  type: 'PUT',
+		  data: {
+		  	title:this.state.title,
+			  image: this.state.post.image,	  
+			  body: this.state.body,	  
+			  author: this.state.post.author,	  
+			  tags: this.state.tags,	
+			  price: this.state.price,  
+			  phone: this.state.phone, 
+			  year: this.state.year,
+			  brand: this.state.brand,
+			  location: this.state.location,    
+			  payments_accepted: this.state.payments_accepted
+		  }
 
-		let stateTemp = this.state;
-		let propTemp = this.props;
-
-		function auto(input, stateTemp, propTemp) {
-			if(stateTemp[input] === ""){
-				console.log("if ", stateTemp[input])
-
-			} else {
-				console.log("else", stateTemp[input])
-				$.ajax({
-				  url:'/api/post/' + propTemp.params.postId,
-				  type: 'PUT',
-				  data: {
-				  	[input]:stateTemp[input]
-				  }
-				})
-			}
-		}
-
-		// holds all properties
-		let listFeatures = ["title","image","body","author","tags", "price", "phone", "year", "brand", "location", "payments_accepted"];
-
-		// calling every properties in the listFeatures
-		listFeatures.forEach((ele) => {
-			auto([ele],stateTemp,propTemp);
 		})
-
-
-
-
-
-
-		
 		//passing postId as props and redirect to post
 		browserHistory.push(`/posts/${this.props.params.postId}`)
 	},
 
 	// captures user's updates and set them in the state 
 	handleEditingChange(inputField, e){
-		e.preventDefault();
-		console.log(e.target.value)
-	  this.setState({
-	  	[inputField]: e.target.value,
+	  this.setState({[
+	  	inputField]: e.target.value,
 	  	postId: this.state.post.id,
 	  })
 	},
@@ -117,7 +95,7 @@ const ManageAdSinglePost = React.createClass({
 	},
 
 render() {
-	console.log('one post ', this.state)
+	console.log('all ',this.state)
 	console.log('this.state.post.author:', this.state.post.author)
 
 	return(
@@ -131,12 +109,12 @@ render() {
 				 	<div className="col-sm-6" >
 
 				 		{/*  UPDATES TITLE    */}
-				 		<h2 className="glyphicon glyphicon"><strong>Title: </strong> {this.state.title}</h2>
+				 		<h2 className="glyphicon glyphicon"><strong>Title: </strong> {this.state.post.title}</h2>
 				 		{ 
 		       		(this.state.inputText) ? 
 		       		(
 				        <input 
-				        	onChange={this.handleEditingChange.bind(this, 'title')} type="text" name="title" value={this.state.title} required="required" className="form-control" autoFocus/>
+				        	onChange={this.handleEditingChange.bind(this, 'title')} type="text" name="title" placeholder="New Title " required="required" className="form-control" autoFocus/>
 		       		):
 		       		(<p></p>) 
 		       	}
@@ -170,14 +148,13 @@ render() {
 
 	      {/*  UPDATES DESCRIPTION/BODY    */}
 
-	      <h3 className="glyphicon glyphicon"><strong>Description: </strong> {this.state.body}</h3>
-
+	      <h3 className="glyphicon glyphicon"><strong>Description: </strong> {this.state.post.body}</h3>
 
 	      { 
        		(this.state.inputText) ? 
        		(
 		        <textarea 
-		        	onChange={this.handleEditingChange.bind(this, 'body')} type="text" name="body"value={this.state.body} style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
+		        	onChange={this.handleEditingChange.bind(this, 'body')} type="text" placeholder="New Description" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
        		):
        		(<p></p>) 
        	}
@@ -185,36 +162,36 @@ render() {
 	      
 	      <h2>Product Information</h2>
 	      {/*  UPDATES BRAND    */}
-	      <h4>Brand: {this.state.brand}</h4>
+	      <h4>Brand: {this.state.post.brand}</h4>
 	      { 
        		(this.state.inputText) ? 
        		(
 		        <input 
-		        	onChange={this.handleEditingChange.bind(this, 'brand')} type="text" placeholder="New Brand" value={this.state.brand} style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
+		        	onChange={this.handleEditingChange.bind(this, 'brand')} type="text" placeholder="New Brand" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
        		):
        		(<p></p>) 
        	}
 
 
 	      {/*  UPDATES YEAR    */}
-	      <h4>Year: {this.state.year}</h4>
+	      <h4>Year: {this.state.post.year}</h4>
 	      { 
        		(this.state.inputText) ? 
        		(
 		        <input 
-		        	onChange={this.handleEditingChange.bind(this, 'year')} type="text" placeholder="New Year" value={this.state.year} style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
+		        	onChange={this.handleEditingChange.bind(this, 'year')} type="text" placeholder="New Year" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
        		):
        		(<p></p>) 
        	}
 
 
 	      {/*  UPDATES PRICE    */}
-	      <h4>Price: {this.state.price}</h4>
+	      <h4>Price: {this.state.post.price}</h4>
 	      { 
        		(this.state.inputText) ? 
        		(
 		        <input 
-		        	onChange={this.handleEditingChange.bind(this, 'price')} type="text" placeholder="New Price" value={this.state.price} style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
+		        	onChange={this.handleEditingChange.bind(this, 'price')} type="text" placeholder="New Price" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
        		):
        		(<p></p>) 
        	}
@@ -222,14 +199,14 @@ render() {
 
 	      
 	      {/*  UPDATES TAGS    */}
-	      <h4>Condition: {this.state.tags}</h4>
+	      <h4>Condition: {this.state.post.tags}</h4>
 	      { 
        		(this.state.inputText) ? 
        		(
 		        <div className="form-group">  
 	            <div className="input-group">
 	            	<span className="input-group-addon"><i className="glyphicon glyphicon-list"></i></span>
-	             	<select onChange={this.handleEditingChange.bind(this, 'tags')} type="text" name="tags" value={this.state.tags} className="form-control selectpicker" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} required>
+	             	<select onChange={this.handleEditingChange.bind(this, 'tags')} type="text" name="tags" className="form-control selectpicker" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} required>
 	             		<option value="">Please select</option>
 	                <option value="New">New</option>
 	                <option value="Semi-New">Semi-New</option>
@@ -244,24 +221,24 @@ render() {
 
 
 		  	{/*  UPDATES LOCATION    */}
-		  	<h4>Location: {this.state.location}</h4>
+		  	<h4>Location: {this.state.post.location}</h4>
 		  	{ 
        		(this.state.inputText) ? 
        		(
 		        <input 
-		        	onChange={this.handleEditingChange.bind(this, 'location')} type="text" value={this.state.location} style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
+		        	onChange={this.handleEditingChange.bind(this, 'location')} type="text" placeholder="New Location" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
        		):
        		(<p></p>) 
        	}
 
 
 	      {/*  UPDATES ACCEPTED PAYMENTS    */}
-	      <h4>Payments Accepted: {this.state.payments_accepted}</h4>
+	      <h4>Payments Accepted: {this.state.post.payments_accepted}</h4>
 	      { 
        		(this.state.inputText) ? 
        		(
 		        <input 
-		        	onChange={this.handleEditingChange.bind(this, 'payments_accepted')} type="text" value={this.state.payments_accepted} style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
+		        	onChange={this.handleEditingChange.bind(this, 'payments_accepted')} type="text" placeholder="New Payment" style={{backgroundColor:'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
        		):
        		(<p></p>) 
        	}
@@ -269,12 +246,12 @@ render() {
        	
 
        	{/*  UPDATES PHONE    */}
-       	<h4>Phone: {this.state.phone}</h4>
+       	<h4>Phone: {this.state.post.phone}</h4>
 	      { 
        		(this.state.inputText) ? 
        		(
 		        <input 
-		        	onChange={this.handleEditingChange.bind(this, 'phone')} type="text" value={this.state.phone} style={{backgroundColor: 'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
+		        	onChange={this.handleEditingChange.bind(this, 'phone')} type="text" placeholder="(646) 360 04 10" style={{backgroundColor: 'rgba(5, 244, 222, 0.36)'}} className="form-control" required/>
        		):
        		(<p></p>) 
        	}<br/>

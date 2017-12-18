@@ -15,23 +15,28 @@ componentDidMount: function (){
 },
 
 render(){
-	console.log('ARE YOU GETTING DATA?',this.state.post)
-	return(
-		<div className="container-main">
-			<div className='container1'>
-		      <h1>Get First Ten Post</h1>
-		      {this.state.post.map((ele,i)=>{
-		        return <div key={i}>
-		        	<Link to={'/posts/' +ele.id}><h2>{ele.title}</h2> </Link>
-		                
-		                <p>{ele.body}</p> 
-		                <p>{ele.location}</p> 
-		                <img src={ele.image}/>
-		               </div>
-		      })}
-		    </div>
 
-      </div>
+	return(
+		<div className="container">
+			<div className="thumbnail clearfix" style={{border: '0px'}}>
+				<h1>First Ten Post</h1>
+	      {this.state.post.map((ele,i)=>{
+	        return <div key={i}>
+	        	<Link to={'/posts/' +ele.id}><h2>{ele.title}</h2> </Link>
+	                
+	                <p>{ele.body}</p> 
+	                <p>{ele.location}</p>
+
+	                <div className="thumbnail clearfix" style={{border: '0px'}}>
+										<Link to={'/posts/' +ele.id}><img className="img-responsive" src={ele.image}/></Link>
+									</div> 
+
+	               </div>
+		      })
+	      }
+		  </div>
+
+    </div>
 		)
 }
 })

@@ -15,6 +15,7 @@ import SinglePost from './single-post'
 import Contactus from './contactus'
 import Help from './help'
 import Login from './login'
+import LoginForCreatePost from './loginForCreatePost'
 import Footer from './footer'
 import ManageAd from './manageAd'
 import ManageAdSinglePost from './manageAdSinglePost'
@@ -32,11 +33,12 @@ const store = createStore(reducers)
 
 const App = React.createClass({
   render(){
+    console.log('main app:', this.props)
     return(
       <div>
-      <Navbar />
-      {this.props.children} 
-      <Footer />
+        <Navbar />
+        {this.props.children} 
+        <Footer />
       </div>
       )
   }

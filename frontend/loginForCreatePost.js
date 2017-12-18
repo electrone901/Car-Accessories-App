@@ -6,7 +6,7 @@ import {connect} from 'react-redux'; //conect library
 import * as userActions from './reducers/userActions.js' //import all actions & 
 
 
-var Login = React.createClass({
+var loginForCreatePost = React.createClass({
 
 	getInitialState(){
 		return {
@@ -36,8 +36,8 @@ var Login = React.createClass({
 			this.props.login(data)
 		})
 
-		//passing email as props and redirect to home
-		browserHistory.push('/')
+		//passing email as props and redirect to profile
+		// browserHistory.push('/')
 		
 		
 	},
@@ -48,16 +48,14 @@ var Login = React.createClass({
 	      <div className="container">
 	      	<center>
 						<div style={{backgroundColor:'#e8e8e8',paddingTop:'20px'}}>
-							<h2>Log in</h2>
+							<h2 style={{color:'rgb(242, 87, 79)'}}>Please Log in To Continue</h2>
 							<div className="card">
 
-								<img id="log" src="https://firebasestorage.googleapis.com/v0/b/interestesapp.appspot.com/o/jtnAkFHYrieKZ93N7Kf8OJdEx4Y2%2Flogin.png?alt=media&token=15aa9d1c-93b0-4001-91e1-2a21fd0298a2" /><br/><br/>
+								<img id="log" src="http://edtrack.herokuapp.com/a4660052d5b6fee6192db0b5aeede812.png" />
 
 								<form onSubmit={this.submitLogin}>
-
-									<input onChange={this.handleChange.bind(this, 'email')} type="email" name="email" placeholder="Email"  required="required"  autoFocus/>
-
-									<input onChange={this.handleChange.bind(this,'password')} type="password"  name="password"placeholder="password" required/>
+									<input onChange={this.handleChange.bind(this, 'email')} type="email" placeholder="email"  required="required"  autoFocus/>
+									<input onChange={this.handleChange.bind(this,'password')} type="password" placeholder="password" required="required"/>
 
 									<div id="remember" className="checkbox">
 										<label><input type="checkbox"/> Remember me</label>
@@ -89,7 +87,7 @@ var Login = React.createClass({
 // const mapStoreToProps = store => (
 //   {user: store.userReducer}
 // )
-export default connect(null, userActions)(Login); //connects: mapStateToProps is global state in the props
+export default connect(null, userActions)(loginForCreatePost); //connects: mapStoreToProps is global state in the props
 
 
 

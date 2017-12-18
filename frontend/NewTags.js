@@ -27,7 +27,7 @@ render(){
 		                <p>{ele.body}</p> 
 		                <p>{ele.location}</p> 
 		                <p>Item Condition:{ele.tags}</p> 
-		                <img src={ele.image}/>
+		                <Link to={'/posts/' +ele.id}><img src={ele.image}/></Link>
 		               </div>
 		      })}
 		    </div>

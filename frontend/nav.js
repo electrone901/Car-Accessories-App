@@ -4,9 +4,9 @@ import './style/Nav.css';
 import {connect} from 'react-redux'; 
 import * as userActions from './reducers/userActions.js' 
 
-
-{/*NAVIGATION BAR*/}
 var Navbar = React.createClass({
+
+  // handleLogout logouts the user and pass the props to 
   handleLogout: function(e){
     e.preventDefault()
     $.ajax({
@@ -19,16 +19,12 @@ var Navbar = React.createClass({
   },
 
 
-
-
-
-
   render: function() {
-    console.log('this.props.userState.user ',this.props.userState.user)
+    console.log('this.props: ',this.props)
+    console.log('Luis nav: ',this.props.userState.user)
     return (
     <div>
 
-       { /*FIRST NAV*/}
       <nav className="navbar main">
           <div className="logo col-xs-3">
             <a href="/" className="logoWidth">
@@ -38,7 +34,6 @@ var Navbar = React.createClass({
           </div>
       </nav>
 
-      { /*SECOND NAV*/}
       <nav className="navbar navbar-default">
         <div className="container-fluid">
 
@@ -54,11 +49,14 @@ var Navbar = React.createClass({
               <li className="linetext"><Link to="/help">Help</Link></li>
 
 
-
+            { /* if props exist then show logout otherwise show Login */}
              {this.props.userState.user ?
-                <li className="linetext"><a href='#' onClick={this.handleLogout}>Log Out</a></li> :
-                <li className="linetext"><Link to="/login">Login</Link></li>
+                (<li className="linetext"><a href='#' onClick={this.handleLogout}>Log Out</a></li> ):
+                <li className="linetext"><Link to="/login">Login<br/></Link></li>
               }
+
+              { /* if props doesn't exist show sign up otherwise show null */}
+
               {! this.props.userState.user ?
                 <li className="linetext"><Link to="/signup">Sign Up</Link></li> :
                 null
@@ -67,7 +65,10 @@ var Navbar = React.createClass({
 
 
 
-              <li className="linetext"><Link to="/search">Search</Link></li>  
+              <li className="linetext"><Link to="/search">Search</Link></li>
+              <li className="linetext">{(this.props.userState.user) ? <li className="loggedUser">Logged as {this.props.userState.user.username}</li> :
+          (<p className="loggedUser"></p>)
+        }</li>
             </ul>
 
           </div>{ /*/.navbar-collapse */}
